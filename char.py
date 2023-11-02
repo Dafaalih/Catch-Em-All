@@ -17,21 +17,13 @@ class car:
         self.bottom = 20
         self.right = 80
         self.top = 50
+
+        # Speed Move
+        self.move = 5
         
         # Car State
         self.health = 100
         self.coins = 0
-        self.light = False
-        # Car Pyhsics
-        self.rot = 0  # is am rotating or not -->> can be 1.5 or -1.5
-        self.rotAngle = 0  # what value of rotation
-        self.currSpeed = 0  # 1 if 'w' or 's' else 0
-        self.speed = 0     # to be increment
-        self.forwardAcc = 0.02
-        self.backwardAcc = -0.02
-        # in case of inertia
-        self.friction = -0.05
-        self.collosion = False
 
     def draw(self):
         """
@@ -52,7 +44,23 @@ class car:
         glVertex(self.right, self.top, 0)
         glEnd()
 
-        glBindTexture(GL_TEXTURE_2D, -1)
+        # glBindTexture(GL_TEXTURE_2D, -1)
+    
+    def move_to_right(self):
+        self.right += self.move
+        self.left += self.move
+
+    def move_to_left(self):
+        self.right -= self.move
+        self.left -= self.move
+
+    def move_to_top(self):
+        self.top += self.move
+        self.bottom += self.move
+
+    def move_to_bottom(self):
+        self.top -= self.move
+        self.bottom -= self.move
 
     def center(self):
         """

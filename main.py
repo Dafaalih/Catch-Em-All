@@ -25,7 +25,8 @@ def display():
         glLoadIdentity()
         cen = carModel.center()
             # projection is related to center of car , we need the center of the car to be the center of the screen
-        glOrtho(cen[0] - 300, cen[0] + 300, cen[1] - 175, cen[1] + 175, -1, 1)
+        # glOrtho(cen[0] - 300, cen[0] + 300, cen[1] - 175, cen[1] + 175, -1, 1)
+        glOrtho(0, 1200, 0, 700, -1, 1)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
         glClear(GL_COLOR_BUFFER_BIT)
@@ -39,10 +40,15 @@ def display():
         draw_healthkit()  # Gambar kit kesehatan
         draw_bombs()  # Gambar bom
         draw_finish()  # Gambar finish line
+        carModel.draw()
         glutSwapBuffers()  # Tukar buffer untuk menampilkan gambar
 
         glPushMatrix()
-        carModel.draw()
+        if carModel.left<=0:
+            carModel.move_to_right()
+        
+        if carModel.bottom <= 0:
+            carModel.move_to_top()
         glPopMatrix()
 
         glFlush()
@@ -52,17 +58,13 @@ def input_keyboard(key,x,y):
 
     # Untuk mengubah posisi kotak
     if key == GLUT_KEY_UP:
-        carModel.top += 5
-        carModel.bottom += 5   
+        carModel.move_to_top()   
     elif key == GLUT_KEY_DOWN:
-        carModel.bottom -= 5
-        carModel.top -= 5
+        carModel.move_to_bottom()
     elif key == GLUT_KEY_RIGHT:
-        carModel.right += 5
-        carModel.left += 5
+        carModel.move_to_right()
     elif key == GLUT_KEY_LEFT:
-        carModel.left -= 5
-        carModel.right -= 5
+        carModel.move_to_left()
 
 def update(value):
     glutPostRedisplay()
