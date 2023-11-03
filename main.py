@@ -3,19 +3,65 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import *
 from labirin import *
 from char import *
+from texture import *
 
 menu = 1
 pos_x = 0
 pos_y = 0
 
-carModel = car()
+class collision:
+    def __init__(self, char, object_maze):
+        self.char = char
+        self.object = object_maze
+    
+    def collosion_walls_horizontal(self):
+        for i in self.object:
+            if self.char.top == i[0][1] and ((self.char.left >= i[0][0] and self.char.left <= i[1][0]) or (self.char.right >= i[0][0] and self.char.right <= i[1][0])) :
+                self.char.move_to_bottom()
+            elif self.char.bottom == i[0][1] and ((self.char.left >= i[0][0] and self.char.left <= i[1][0]) or (self.char.right >= i[0][0] and self.char.right <= i[1][0])) :
+                self.char.move_to_top()
+            elif self.char.top >= 700:
+                self.char.move_to_bottom()
+            elif self.char.left == i[1][0] and (self.char.bottom <= i[1][1] and self.char.top >=  i[1][1]):
+                self.char.move_to_right()
+            # elif self.char.right == i[0][0]:
+            #     self.char.move_to_left()
 
+    
+    def collosion_walls_vertical(self):
+        for i in self.object:
+            if self.char.right == i[0][0] and ((self.char.bottom <= i[1][1] and self.char.bottom >= i[0][1]) or (self.char.top >= i[0][1] and self.char.top <= i[1][1])):
+                self.char.move_to_left()
+            elif self.char.left == i[0][0] and ((self.char.bottom <= i[1][1] and self.char.bottom >= i[0][1]) or (self.char.top >= i[0][1] and self.char.top <= i[1][1])) :
+                self.char.move_to_right()
+            elif self.char.left <= 0:
+                self.char.move_to_right()
+            elif self.char.top == i[0][1] and (self.char.left <= i[0][0] and self.char.right >=  i[0][0]):
+                self.char.move_to_bottom()
+            elif self.char.bottom == i[1][1] and (self.char.left <= i[1][0] and self.char.right >=  i[1][0]):
+                self.char.move_to_top()
+            # elif self.char.bottom == i[1][1]:
+            #     self.char.move_to_top()
+
+    def collosion_coins(self, box):
+        for i in box:
+            data = i.get_vertices()
+            if ((self.char.right >= data[0][0] and self.char.right <= data[2][0]) or (self.char.left >= data[0][0] and self.char.left <= data[2][0])) and ((self.char.bottom <= data[0][1] and self.char.bottom >=  data[2][1]) or (self.char.top <= data[0][1] and self.char.top >=  data[2][1])):
+                i.collected = True
+                print("COLLI")
+
+carModel = car()
+data = [maze1[i].get_vertices() for i in range(len(maze1))]
+col = collision(carModel, data)
+
+    
 def init():
     glClearColor(0.0, 0.0, 0.0, 0.0)
     glMatrixMode(GL_PROJECTION)
     glOrtho(0, 1200, 0, 700, -1, 1)
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
+    load_texture()
 
 
 def display():
@@ -33,8 +79,6 @@ def display():
         glClearColor(0.2, 0.2, 0.2, 0)
         # draw_grid()  # Jika Anda ingin menampilkan grid
 
-        print("KIRII : ", carModel.left, " KANAN : " , carModel.right)
-        print("ATAS : ", carModel.top, " BAWAH : " , carModel.bottom)
         draw_map()  # Gambar labirin
         draw_coins()  # Gambar koin
         draw_healthkit()  # Gambar kit kesehatan
@@ -44,11 +88,9 @@ def display():
         glutSwapBuffers()  # Tukar buffer untuk menampilkan gambar
 
         glPushMatrix()
-        if carModel.left<=0:
-            carModel.move_to_right()
-        
-        if carModel.bottom <= 0:
-            carModel.move_to_top()
+        col.collosion_walls_horizontal()
+        col.collosion_walls_vertical()
+        col.collosion_coins(coins1)
         glPopMatrix()
 
         glFlush()

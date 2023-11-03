@@ -1,6 +1,7 @@
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
+from texture import *
 LINE_WIDTH = 10
 
 class Line:
@@ -34,15 +35,14 @@ class box:
 
     def draw(self):
         if self.collected == False:
-            # choosing texture of box based on its type
-            # if self.type == 0:
-            #     glBindTexture(GL_TEXTURE_2D, STAR)
-            # if self.type == 1:
-            #     glBindTexture(GL_TEXTURE_2D, BOMB)
-            # if self.type == 2:
-            #     glBindTexture(GL_TEXTURE_2D, HEALTH)
-            # if self.type == 3:
-            #     glBindTexture(GL_TEXTURE_2D, FINISH_LINE)
+            if self.type == 0:
+                glBindTexture(GL_TEXTURE_2D, STAR)
+            if self.type == 1:
+                glBindTexture(GL_TEXTURE_2D, BOMB)
+            if self.type == 2:
+                glBindTexture(GL_TEXTURE_2D, HEALTH)
+            if self.type == 3:
+                glBindTexture(GL_TEXTURE_2D, FINISH_LINE)
             glBegin(GL_POLYGON)
             glTexCoord(0, 0)
             glVertex(self.left, self.bottom, 0)
@@ -69,11 +69,11 @@ maze1 = [
     Line(0, 100, 300, 100), Line(150, 200, 150, 600),
     Line(0, 600, 150, 600), Line(300, 200, 300, 600),
     Line(300, 200, 900, 200), Line(450, 300, 900, 300),
-    Line(600, 400, 900, 400), Line(0, 700, 0, 0,),
-    Line(600, 500, 1200, 500), Line(1050, 500, 1050, 200),
+    Line(600, 400, 900, 400), Line(0, 0, 0, 700,),
+    Line(600, 500, 1200, 500), Line(1050, 200, 1050, 500),
     Line(600, 500, 600, 600), Line(600, 600, 1050, 600),
-    Line(900, 400, 900, 300), Line(450, 700, 450, 300),
-    Line(900, 200, 900, 100), Line(450, 100, 1050, 100),
+    Line(900, 300, 900, 400), Line(450, 300, 450, 700),
+    Line(900, 100, 900, 200), Line(450, 100, 1050, 100),
     Line(450, 0, 450, 100), Line(0, 0, 1200, 0),
     Line(1200, 0, 1200, 700), Line(1200, 700, 0, 700)
     ]
@@ -150,3 +150,10 @@ def draw_grid():
         glVertex(i*150, -1500, 0)
         glVertex(i*150, 1500, 0)
     glEnd()
+
+
+data = []
+for i in range(len(maze1)):
+    data.append(maze1[i].get_vertices())
+
+print(data)
