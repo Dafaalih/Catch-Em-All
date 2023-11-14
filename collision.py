@@ -1,54 +1,43 @@
-class Obstacle:
-    def __init__(self, x, y, width, height):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+class collision:
+    def __init__(self, char, object_maze):
+        self.char = char
+        self.object = object_maze
+    
+    def collosion_walls_horizontal(self):
+        for i in self.object:
+            if self.char.top == i[0][1] and ((self.char.left >= i[0][0] and self.char.left <= i[1][0]) or (self.char.right >= i[0][0] and self.char.right <= i[1][0])) :
+                self.char.move_to_bottom()
+            elif self.char.bottom == i[0][1] and ((self.char.left >= i[0][0] and self.char.left <= i[1][0]) or (self.char.right >= i[0][0] and self.char.right <= i[1][0])) :
+                self.char.move_to_top()
+            elif self.char.top >= 700:
+                self.char.move_to_bottom()
+            elif self.char.left == i[1][0] and (self.char.bottom <= i[1][1] and self.char.top >=  i[1][1]):
+                self.char.move_to_right()
+            # elif self.char.right == i[0][0]:
+            #     self.char.move_to_left()
 
-    def is_collision(self, x_k, y_k):
-        return (
-            x_k + 10 >= self.x and x_k - 10 <= self.x + self.width and
-            y_k + 20 >= self.y and y_k - 15 <= self.y + self.height
-        )
+    
+    def collosion_walls_vertical(self):
+        for i in self.object:
+            if self.char.right == i[0][0] and ((self.char.bottom <= i[1][1] and self.char.bottom >= i[0][1]) or (self.char.top >= i[0][1] and self.char.top <= i[1][1])):
+                self.char.move_to_left()
+            elif self.char.left == i[0][0] and ((self.char.bottom <= i[1][1] and self.char.bottom >= i[0][1]) or (self.char.top >= i[0][1] and self.char.top <= i[1][1])) :
+                self.char.move_to_right()
+            elif self.char.left <= 0:
+                self.char.move_to_right()
+            elif self.char.top == i[0][1] and (self.char.left <= i[0][0] and self.char.right >=  i[0][0]):
+                self.char.move_to_bottom()
+            elif self.char.bottom == i[1][1] and (self.char.left <= i[1][0] and self.char.right >=  i[1][0]):
+                self.char.move_to_top()
+            # elif self.char.bottom == i[1][1]:
+            #     self.char.move_to_top()
 
-class Environment:
-    def __init__(self):
-        self.obstacles = []
-
-    def add_obstacle(self, x, y, width, height):
-        obstacle = Obstacle(x, y, width, height)
-        self.obstacles.append(obstacle)
-
-    def handle_collision(self, x_k, y_k):
-        for obstacle in self.obstacles:
-            if obstacle.is_collision(x_k, y_k):
-                # Implementasi aksi yang sesuai saat collision terjadi
-                if x_k < obstacle.x:
-                    x_k -= 15
-                elif x_k > obstacle.x:
-                    x_k += 15
-
-                if y_k > obstacle.y:
-                    y_k += 15
-                elif y_k < obstacle.y:
-                    y_k -= 15
-
-# Inisialisasi lingkungan permainan
-environment = Environment()
-
-# Menambahkan rintangan-rintangan ke lingkungan permainan
-environment.add_obstacle(0, 275, 70, 20)
-environment.add_obstacle(70, 175, 10, 100)
-environment.add_obstacle(70, 75, 10, 100)
-environment.add_obstacle(170, 0, 10, 275)
-environment.add_obstacle(170, 175, 100, 20)
-environment.add_obstacle(270, 75, 400, 20)
-environment.add_obstacle(370, 75, 10, 300)
-environment.add_obstacle(270, 275, 300, 20)
-
-# Contoh penggunaan:
-x_k = 100  # Koordinat x karakter
-y_k = 100  # Koordinat y karakter
-
-# Memeriksa collision dan menangani aksi yang sesuai
-environment.handle_collision(x_k, y_k)
+    def item_collisiom(self, box):
+        for i in box:
+            data = i.get_vertices()
+            if ((self.char.right >= data[0][0] and self.char.right <= data[2][0]) or (self.char.left >= data[0][0] and self.char.left <= data[2][0])) and ((self.char.bottom <= data[0][1] and self.char.bottom >=  data[2][1]) or (self.char.top <= data[0][1] and self.char.top >=  data[2][1])):
+                i.collected = True
+                print("COLLI")
+            elif ((self.char.top <= data[0][1] and self.char.top >= data[1][1]) or (self.char.bottom <= data[0][1] and self.char.bottom >= data[1][1])) and (data[0][0] >= self.char.left and data[2][0] <= self.char.right):
+                i.collected = True
+                print("COLL 2")
