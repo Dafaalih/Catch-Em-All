@@ -4,6 +4,7 @@ from OpenGL.GLUT import *
 from math import *
 from numpy import sign
 import pygame
+from texture import *
 
 
 class car:
@@ -15,7 +16,7 @@ class car:
         # Coordinates
         self.left = 20
         self.bottom = 20
-        self.right = 80
+        self.right = 50
         self.top = 50
 
         # Speed Move
@@ -29,22 +30,23 @@ class car:
         """
         This method uses the OpenGL library to draw the car onto the screen. It uses the texture module to apply a texture to the car.
         """
+        glBindTexture(GL_TEXTURE_2D, CHAR1)
         glColor3f(1, 1, 1)
         glBegin(GL_POLYGON)
-        # glTexCoord(0, 1)
+        glTexCoord(0, 1)
         glVertex(self.left, self.top, 0)
 
-        # glTexCoord(0, 0)
+        glTexCoord(0, 0)
         glVertex(self.left, self.bottom, 0)
 
-        # glTexCoord(1, 0)
+        glTexCoord(1, 0)
         glVertex(self.right, self.bottom, 0)
 
-        # glTexCoord(1, 1)
+        glTexCoord(1, 1)
         glVertex(self.right, self.top, 0)
         glEnd()
 
-        # glBindTexture(GL_TEXTURE_2D, -1)
+        glBindTexture(GL_TEXTURE_2D, -1)
     
     def move_to_right(self):
         self.right += self.move

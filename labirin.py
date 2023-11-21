@@ -36,13 +36,13 @@ class box:
     def draw(self):
         if self.collected == False:
             if self.type == 0:
-                glBindTexture(GL_TEXTURE_2D, STAR)
-            if self.type == 1:
-                glBindTexture(GL_TEXTURE_2D, BOMB)
+                glBindTexture(GL_TEXTURE_2D, RESHIRAM)
             if self.type == 2:
-                glBindTexture(GL_TEXTURE_2D, HEALTH)
-            if self.type == 3:
-                glBindTexture(GL_TEXTURE_2D, FINISH_LINE)
+                glBindTexture(GL_TEXTURE_2D, MIENSHAO)
+            # if self.type == 2:
+            #     glBindTexture(GL_TEXTURE_2D, HEALTH)
+            # if self.type == 3:
+            #     glBindTexture(GL_TEXTURE_2D, FINISH_LINE)
             glBegin(GL_POLYGON)
             glTexCoord(0, 0)
             glVertex(self.left, self.bottom, 0)
@@ -94,6 +94,8 @@ coins1 = [box(400, 40, 420, 60), box(850, 140, 870, 160),
 health1 = [box(1125, 140, 1145, 160, 2), box(750, 440, 770, 460, 2),
            box(975, 640, 995, 660, 2), box(50, 540, 70, 560, 2),
            box(375, 440, 395, 460, 2)]
+
+
 
 # finish Line of maze
 finish = [box(730, 507-0.5, 750, 593+0.5, 3)]
@@ -150,7 +152,6 @@ def draw_grid():
         glVertex(i*150, -1500, 0)
         glVertex(i*150, 1500, 0)
     glEnd()
-
 
 data = []
 for i in range(len(maze1)):
