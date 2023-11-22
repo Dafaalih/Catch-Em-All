@@ -15,7 +15,7 @@ class Line:
         return [[self.x1, self.y1], [self.x2, self.y2]]
     
     def draw_line(self):
-        glColor3f(1, 0, 0)
+        glColor3f(146 / 255.0, 116 / 255.0, 91 / 255.0)
         glLineWidth(10)
         glBegin(GL_LINES)
         glVertex(self.x1, self.y1, 0)

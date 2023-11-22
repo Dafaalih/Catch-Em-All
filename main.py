@@ -83,9 +83,11 @@ def display():
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
         glClear(GL_COLOR_BUFFER_BIT)
-        glClearColor(0.2, 0.2, 0.2, 0)
+        glClearColor(0.1, 0.1, 0.1, 0)
         # draw_grid()  # Jika Anda ingin menampilkan grid
 
+        background(-1000,-675,2350,1375 , BGOUT)
+        background(0,0,1200,700, BG2)
         draw_map()  # Gambar labirin
         draw_coins()  # Gambar koin
         draw_healthkit()  # Gambar kit kesehatan
@@ -109,13 +111,29 @@ def input_keyboard(key,x,y):
 
     # Untuk mengubah posisi kotak
     if key == GLUT_KEY_UP:
-        carModel.move_to_top()   
+        carModel.move_to_top()
+        carModel.position = "top"   
+        if carModel.steptop >= 16:
+            carModel.steptop = 13
+        carModel.steptop += 1
     elif key == GLUT_KEY_DOWN:
         carModel.move_to_bottom()
+        carModel.position = "bottom"
+        if carModel.stepbottom >= 4:
+            carModel.stepbottom = 1
+        carModel.stepbottom += 1
     elif key == GLUT_KEY_RIGHT:
         carModel.move_to_right()
+        carModel.position = "right"
+        if carModel.stepright >= 12:
+            carModel.stepright = 9
+        carModel.stepright += 1
     elif key == GLUT_KEY_LEFT:
         carModel.move_to_left()
+        carModel.position = "left"
+        if carModel.stepleft >= 8:
+            carModel.stepleft = 5
+        carModel.stepleft += 1
 
 def update(value):
     glutPostRedisplay()

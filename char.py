@@ -18,6 +18,11 @@ class car:
         self.bottom = 20
         self.right = 50
         self.top = 50
+        self.position = 'right'
+        self.stepbottom = 1
+        self.stepleft = 5
+        self.stepright = 9
+        self.steptop = 13
 
         # Speed Move
         self.move = 5
@@ -30,7 +35,35 @@ class car:
         """
         This method uses the OpenGL library to draw the car onto the screen. It uses the texture module to apply a texture to the car.
         """
-        glBindTexture(GL_TEXTURE_2D, CHAR1)
+        if self.position == 'bottom':
+            texture_ids = {"bottom1": 11, "bottom2": 12, "bottom3": 13, "bottom4": 14}
+
+            texture_id = texture_ids.get("bottom"+str(self.stepbottom), 0)
+            if self.stepbottom <= 4 :
+                glBindTexture(GL_TEXTURE_2D, texture_id)
+
+        elif self.position == 'left':
+            texture_ids = {"left5": 15, "left6": 16, "left7": 17, "left8": 18}
+
+            texture_id = texture_ids.get("left"+str(self.stepleft), 0)
+            if self.stepleft <= 8:
+                glBindTexture(GL_TEXTURE_2D, texture_id)
+
+        elif self.position == 'right':
+            texture_ids = {"right9": 19, "right10": 20, "right11": 21, "right12": 22}
+
+            texture_id = texture_ids.get("right"+str(self.stepright), 0)
+            if self.stepright <= 12:
+                glBindTexture(GL_TEXTURE_2D, texture_id)
+
+        elif self.position == 'top':
+            texture_ids = {"top13": 23, "top14": 24, "top15": 25, "top16": 26}
+
+            texture_id = texture_ids.get("top"+str(self.steptop), 0)
+            print(texture_id)
+            if self.steptop <= 16:
+                glBindTexture(GL_TEXTURE_2D, texture_id)
+
         glColor3f(1, 1, 1)
         glBegin(GL_POLYGON)
         glTexCoord(0, 1)

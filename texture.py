@@ -5,7 +5,7 @@ from OpenGL.GLUT import *
 
 
 #creating a list of texture names that will be used to identify each texture.
-texture_names = [0,1,2,3,4,5,6,7,8,9,10]
+texture_names = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28]
 
 # assigning a unique integer identifier to each texture using global constants, which makes it easier to refer to textures throughout the code.
 RESHIRAM = 0
@@ -19,6 +19,25 @@ GAMENAME = 7
 OPTIONCLICK = 8
 PLAYCLICK = 9
 QUITCLICK = 10
+BOTTOM1 = 11
+BOTTOM2 = 12
+BOTTOM3 = 13
+BOTTOM4 = 14
+LEFT1 = 15
+LEFT2 = 16
+LEFT3 = 17
+LEFT4 = 18
+RIGHT1 = 19
+RIGHT2 = 20
+RIGHT3 = 21
+RIGHT4 = 22
+TOP1 = 23
+TOP2 = 24
+TOP3 = 25
+TOP4 = 26
+BG2 = 27
+BGOUT = 28
+
 
 
 def load_texture():
@@ -42,7 +61,25 @@ def load_texture():
     images.append(pygame.image.load("assets/img/OPTION-CLICK.png"))
     images.append(pygame.image.load("assets/img/PLAY-CLICK.png"))
     images.append(pygame.image.load("assets/img/QUIT-CLICK.png"))
-
+    images.append(pygame.image.load("assets/img/pokemontrainer/image1.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image2.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image3.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image4.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image5.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image6.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image7.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image8.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image9.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image10.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image11.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image12.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image13.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image14.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image15.png"))
+    images.append(pygame.image.load("assets/img/pokemontrainer/image16.png"))
+    images.append(pygame.image.load("assets/img/background.png"))
+    images.append(pygame.image.load("assets/img/bg-out.png"))
+    # images.append(pygame.image.load("assets/img/background.png"))
     # Convert the images to raw binary image data
     textures = [pygame.image.tostring(img,"RGBA", 1) for img in images]
 
