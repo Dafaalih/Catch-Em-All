@@ -2,6 +2,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 from texture import *
+import time
 LINE_WIDTH = 10
 
 class Line:
@@ -15,7 +16,7 @@ class Line:
         return [[self.x1, self.y1], [self.x2, self.y2]]
     
     def draw_line(self):
-        glColor3f(146 / 255.0, 116 / 255.0, 91 / 255.0)
+        glColor3f(146 / 255.0, 116 / 255.0, 91 / 255.0) #Warna coklat
         glLineWidth(10)
         glBegin(GL_LINES)
         glVertex(self.x1, self.y1, 0)
@@ -31,19 +32,34 @@ class box:
         self.right = right+5
         self.top = top+5
         self.type = Type
-        self.collected = False  # if collected it will not be drawn ,else it will be drawn
+        self.collected = False # if collected it will not be drawn ,else it will be drawn
+        self.texture_ids = [None, None]  # List ID tekstur untuk dua gambar
+        self.current_texture_index = 0
+        self.last_texture_change_time = time.time()
+        self.texture_change_interval = 1.0
 
     def draw(self):
+        current_time = time.time()
+        time_since_last_change = current_time - self.last_texture_change_time
+
+        # Cek apakah sudah waktunya mengganti gambar
+        if time_since_last_change >= self.texture_change_interval:
+            # Ganti indeks gambar yang akan digunakan
+            self.current_texture_index = 1 - self.current_texture_index
+            # Perbarui waktu terakhir perubahan gambar
+            self.last_texture_change_time = current_time
+
         if self.collected == False:
-            if self.type == 0:
-                glBindTexture(GL_TEXTURE_2D, RESHIRAM)
-            if self.type == 2:
-                glBindTexture(GL_TEXTURE_2D, MIENSHAO)
+            if self.texture_ids[self.current_texture_index] is not None:
+                glBindTexture(GL_TEXTURE_2D, self.texture_ids[self.current_texture_index])
             # if self.type == 2:
-            #     glBindTexture(GL_TEXTURE_2D, HEALTH)
-            # if self.type == 3:
-            #     glBindTexture(GL_TEXTURE_2D, FINISH_LINE)
+            #     glBindTexture(GL_TEXTURE_2D, pidgeot)
+            # if self.type == 1:
+            #     glBindTexture(GL_TEXTURE_2D, POKEMONpikachu)
+            if self.type == 3:
+                glBindTexture(GL_TEXTURE_2D, HOME)
             glBegin(GL_POLYGON)
+            # glColor4f(0,0,0,0.2)
             glTexCoord(0, 0)
             glVertex(self.left, self.bottom, 0)
             glTexCoord(1, 0)
@@ -54,6 +70,14 @@ class box:
             glVertex(self.left, self.top, 0)
             glEnd()
         glBindTexture(GL_TEXTURE_2D, -1)
+
+    def switch_texture(self):
+        # Ganti indeks gambar yang akan digunakan
+        self.current_texture_index = 1 - self.current_texture_index
+
+
+    def load_textures(self, texture_id1, texture_id2):
+        self.texture_ids = [texture_id1, texture_id2]
 
     def get_vertices(self):
         vertices = [
@@ -78,27 +102,27 @@ maze1 = [
     Line(1200, 0, 1200, 700), Line(1200, 700, 0, 700)
     ]
 
-# car health will decrease by half after collision with a bomb
-bombs1 =[box(180, 225, 210, 255, 1), box(330, 530, 360, 560, 1),
+
+pikachu =[box(180, 225, 210, 255, 1), box(330, 530, 360, 560, 1),
          box(480, 330, 510, 360, 1), box(990, 225, 1020, 255, 1),
          box(1140, 530, 1170, 560, 1), box(990, 10, 1020, 40, 1)]
 
-# stars located on the map
-coins1 = [box(400, 40, 420, 60), box(850, 140, 870, 160),
+
+crustle = [box(400, 40, 420, 60), box(850, 140, 870, 160),
           box(50, 140, 70, 160), box(50, 630, 70, 650),
           box(225, 440, 245, 460), box(525, 40, 545, 60),
           box(1125, 440, 1145, 460), box(850, 340, 870, 360),
           box(500, 240, 520, 260)]
 
 # health boasters to increase car health
-health1 = [box(1125, 140, 1145, 160, 2), box(750, 440, 770, 460, 2),
+pidgeot = [box(1125, 140, 1145, 160, 2), box(750, 440, 770, 460, 2),
            box(975, 640, 995, 660, 2), box(50, 540, 70, 560, 2),
            box(375, 440, 395, 460, 2)]
 
 
 
 # finish Line of maze
-finish = [box(730, 507-0.5, 750, 593+0.5, 3)]
+finish = [box(610, 507-0.5, 700, 593+0.5, 3)]
 
 # reset every box in the given list of boxes to its initial state
 def reset(lst_of_box : box):
@@ -108,30 +132,36 @@ def reset(lst_of_box : box):
 
 # reset all boxes to the initial state to be able to play again
 def reset_maze():
-    reset(bombs1)
-    reset(coins1)
-    reset(health1)
+    reset(pikachu)
+    reset(crustle)
+    reset(pidgeot)
 
 # draw maze walls
 def draw_map():
     for i in range(len(maze1)):
         maze1[i].draw_line()
 
-# draw stars
-def draw_coins():
+# draw crustle
+def draw_crustle():
     glColor3f(1, 1, 1)
-    for i in coins1:
+    for i in crustle:
         i.draw()
+        i.load_textures(CRUSTLE1, CRUSTLE2)
 
-def draw_healthkit():
-    glColor3f(1, 1, 1)
-    for i in health1:
-        i.draw()
 
-def draw_bombs():
+# draw pidgeot
+def draw_pidgeot():
     glColor3f(1, 1, 1)
-    for i in bombs1:
+    for i in pidgeot:
         i.draw()
+        i.load_textures(PIDGEOT1, PIDGEOT2)
+
+# draw pikachu
+def draw_pikachu():
+    glColor3f(1, 1, 1)
+    for i in pikachu:
+        i.draw()
+        i.load_textures(PIKACHU1, PIKACHU2)
 
 # draw finish Line of the map
 def draw_finish():

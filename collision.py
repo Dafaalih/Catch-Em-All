@@ -13,8 +13,8 @@ class collision:
                 self.char.move_to_bottom()
             elif self.char.left == i[1][0] and (self.char.bottom <= i[1][1] and self.char.top >=  i[1][1]):
                 self.char.move_to_right()
-            # elif self.char.right == i[0][0]:
-            #     self.char.move_to_left()
+            elif self.char.right == i[0][0] and (self.char.bottom <= i[1][1] and self.char.top >=  i[1][1]):
+                self.char.move_to_left()
 
     
     def collosion_walls_vertical(self):
@@ -36,8 +36,16 @@ class collision:
         for i in box:
             data = i.get_vertices()
             if ((self.char.right >= data[0][0] and self.char.right <= data[2][0]) or (self.char.left >= data[0][0] and self.char.left <= data[2][0])) and ((self.char.bottom <= data[0][1] and self.char.bottom >=  data[2][1]) or (self.char.top <= data[0][1] and self.char.top >=  data[2][1])):
-                i.collected = True
-                print("COLLI")
+                if i.type == 3:
+                    return True
+                else:
+                    if i.collected == False:
+                        self.char.pokemonCollect += 1
+                    i.collected = True
             elif ((self.char.top <= data[0][1] and self.char.top >= data[1][1]) or (self.char.bottom <= data[0][1] and self.char.bottom >= data[1][1])) and (data[0][0] >= self.char.left and data[2][0] <= self.char.right):
-                i.collected = True
-                print("COLL 2")
+                if i.type == 3:
+                    return True
+                else:
+                    if i.collected == False:
+                        self.char.pokemonCollect += 1
+                    i.collected = True

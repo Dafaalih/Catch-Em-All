@@ -5,11 +5,11 @@ from OpenGL.GLUT import *
 
 
 #creating a list of texture names that will be used to identify each texture.
-texture_names = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28]
+texture_names = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 , 40 , 41, 42 , 43, 44, 45 , 46]
 
 # assigning a unique integer identifier to each texture using global constants, which makes it easier to refer to textures throughout the code.
-RESHIRAM = 0
-MIENSHAO = 1
+CRUSTLE1 = 0
+CRUSTLE2 = 1
 CHAR1 = 2
 BG1 = 3
 PLAY = 4
@@ -37,6 +37,24 @@ TOP3 = 25
 TOP4 = 26
 BG2 = 27
 BGOUT = 28
+POKEMONTRAINER = 29
+HOME = 30
+GAMEOVER = 31
+FINISH = 32
+PIDGEOT1 = 33
+PIDGEOT2 = 34
+PIKACHU1 = 35
+PIKACHU2 = 36
+TAILLOW1 = 37
+TAILLOW2 = 38
+INTROBOY = 39
+INTROGIRL = 40
+EASY = 41
+EASYCLICK = 42
+MEDIUM = 43
+MEDIUMCLICK = 44
+HARD = 45
+HARDCLICK = 46
 
 
 
@@ -50,17 +68,17 @@ def load_texture():
     images = []
 
     # Load images from files
-    images.append(pygame.image.load("assets/img/RESHIRAM.png"))
-    images.append(pygame.image.load("assets/img/2.png"))
+    images.append(pygame.image.load("assets/img/Crustle/image1.png"))
+    images.append(pygame.image.load("assets/img/Crustle/image2.png"))
     images.append(pygame.image.load("assets/img/trainer.png"))
-    images.append(pygame.image.load("assets/img/BG.png"))
-    images.append(pygame.image.load("assets/img/PLAY.png"))
-    images.append(pygame.image.load("assets/img/QUIT.png"))
-    images.append(pygame.image.load("assets/img/OPTION.png"))
+    images.append(pygame.image.load("assets/img/Background/BG.png"))
+    images.append(pygame.image.load("assets/img/Button/PLAY.png"))
+    images.append(pygame.image.load("assets/img/Button/QUIT.png"))
+    images.append(pygame.image.load("assets/img/Button/OPTION.png"))
     images.append(pygame.image.load("assets/img/Namagame.png"))
-    images.append(pygame.image.load("assets/img/OPTION-CLICK.png"))
-    images.append(pygame.image.load("assets/img/PLAY-CLICK.png"))
-    images.append(pygame.image.load("assets/img/QUIT-CLICK.png"))
+    images.append(pygame.image.load("assets/img/Button/OPTION-CLICK.png"))
+    images.append(pygame.image.load("assets/img/Button/PLAY-CLICK.png"))
+    images.append(pygame.image.load("assets/img/Button/QUIT-CLICK.png"))
     images.append(pygame.image.load("assets/img/pokemontrainer/image1.png"))
     images.append(pygame.image.load("assets/img/pokemontrainer/image2.png"))
     images.append(pygame.image.load("assets/img/pokemontrainer/image3.png"))
@@ -77,9 +95,28 @@ def load_texture():
     images.append(pygame.image.load("assets/img/pokemontrainer/image14.png"))
     images.append(pygame.image.load("assets/img/pokemontrainer/image15.png"))
     images.append(pygame.image.load("assets/img/pokemontrainer/image16.png"))
-    images.append(pygame.image.load("assets/img/background.png"))
-    images.append(pygame.image.load("assets/img/bg-out.png"))
-    # images.append(pygame.image.load("assets/img/background.png"))
+    images.append(pygame.image.load("assets/img/Background/background.png"))
+    images.append(pygame.image.load("assets/img/Background/bg-out.png"))
+    images.append(pygame.image.load("assets/img/trainer2.png"))
+    images.append(pygame.image.load("assets/img/home.png"))
+    images.append(pygame.image.load("assets/img/Button/Gameover.png"))
+    images.append(pygame.image.load("assets/img/Button/Finish.png"))
+    images.append(pygame.image.load("assets/img/Pidgeot/image1.png"))
+    images.append(pygame.image.load("assets/img/Pidgeot/image2.png"))
+    images.append(pygame.image.load("assets/img/Pikachu/image1.png"))
+    images.append(pygame.image.load("assets/img/Pikachu/image2.png"))
+    images.append(pygame.image.load("assets/img/Taillow/image1.png"))
+    images.append(pygame.image.load("assets/img/Taillow/image2.png"))
+    images.append(pygame.image.load("assets/img/Background/introBoy.png"))
+    images.append(pygame.image.load("assets/img/Background/introGirl.png"))
+    images.append(pygame.image.load("assets/img/Button/Easy.png"))
+    images.append(pygame.image.load("assets/img/Button/Easy-Click.png"))
+    images.append(pygame.image.load("assets/img/Button/Normal.png"))
+    images.append(pygame.image.load("assets/img/Button/Normal-Click.png"))
+    images.append(pygame.image.load("assets/img/Button/Hard.png"))
+    images.append(pygame.image.load("assets/img/Button/Hard-Click.png"))
+
+
     # Convert the images to raw binary image data
     textures = [pygame.image.tostring(img,"RGBA", 1) for img in images]
 
