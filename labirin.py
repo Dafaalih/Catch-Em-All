@@ -75,7 +75,6 @@ class box:
         # Ganti indeks gambar yang akan digunakan
         self.current_texture_index = 1 - self.current_texture_index
 
-
     def load_textures(self, texture_id1, texture_id2):
         self.texture_ids = [texture_id1, texture_id2]
 

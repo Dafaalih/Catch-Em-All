@@ -9,10 +9,6 @@ from texture import *
 
 class char:
     def __init__(self):
-        """
-        The __init__ method initializes the car's position and state attributes,
-        as well as its physics attributes such as speed and acceleration.
-        """
         # Coordinates
         self.left = 20
         self.bottom = 20
@@ -40,9 +36,6 @@ class char:
         self.pokemonCollect = 0
 
     def draw(self):
-        """
-        This method uses the OpenGL library to draw the car onto the screen. It uses the texture module to apply a texture to the car.
-        """
         if self.position == 'bottom':
             texture_ids = {"bottom1": 11, "bottom2": 12, "bottom3": 13, "bottom4": 14}
 
@@ -106,20 +99,13 @@ class char:
         self.bottom -= self.move
 
     def center(self):
-        """
-        This method calculates the center of the car, which is used in other methods to position and rotate it.
-        """
+
         return [(self.right + self.left)/2, (self.top + self.bottom)/2]
 
     def load_texture(self):
         return
         
     def get_vertices(self):
-        """ 
-            This method calculates the four vertices of the car, which are used in collision detection.
-            It first calculates the center of the car,
-            then applies a rotation matrix to the vertices to adjust for the car's rotation.
-        """
         # return type is a list
         # Step 1 : Calculate the center of the car
         center = self.center()

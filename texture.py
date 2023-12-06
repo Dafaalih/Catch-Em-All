@@ -5,7 +5,7 @@ from OpenGL.GLUT import *
 
 
 #creating a list of texture names that will be used to identify each texture.
-texture_names = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 , 40 , 41, 42 , 43, 44, 45 , 46]
+texture_names = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 , 40 , 41, 42 , 43, 44, 45 , 46, 47, 48, 49, 50, 51, 52, 53]
 
 # assigning a unique integer identifier to each texture using global constants, which makes it easier to refer to textures throughout the code.
 CRUSTLE1 = 0
@@ -55,6 +55,13 @@ MEDIUM = 43
 MEDIUMCLICK = 44
 HARD = 45
 HARDCLICK = 46
+BGSUNSET = 47
+BGUMI = 48
+BACKGROUNDTITLE = 49
+FARMERBUTTON = 50
+SUNSETBUTTON = 51 
+UMIBUTTON = 52
+BOXBACKGROUND = 53
 
 
 
@@ -115,8 +122,14 @@ def load_texture():
     images.append(pygame.image.load("assets/img/Button/Normal-Click.png"))
     images.append(pygame.image.load("assets/img/Button/Hard.png"))
     images.append(pygame.image.load("assets/img/Button/Hard-Click.png"))
-
-
+    images.append(pygame.image.load("assets/img/Background/BG-Sunset.png"))
+    images.append(pygame.image.load("assets/img/Background/BG-umi.png"))
+    images.append(pygame.image.load("assets/img/Option/Background-title.png"))
+    images.append(pygame.image.load("assets/img/Option/farmer-button.png"))
+    images.append(pygame.image.load("assets/img/Option/sunset-button.png"))
+    images.append(pygame.image.load("assets/img/Option/umi-button.png"))
+    images.append(pygame.image.load("assets/img/Option/box-background.png"))
+    
     # Convert the images to raw binary image data
     textures = [pygame.image.tostring(img,"RGBA", 1) for img in images]
 
@@ -144,4 +157,3 @@ def setup_texture(binary_img, texture_iden, width, height):
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width,
                  height, 0, GL_RGBA, GL_UNSIGNED_BYTE, binary_img)
-        

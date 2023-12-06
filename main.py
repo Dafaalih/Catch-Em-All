@@ -5,15 +5,17 @@ from labirin import *
 from char import *
 from texture import *
 from collision import *
+from model import *
 import os
 
-menu = 3
+menu = 0
 pos_x = 0
 pos_y = 0
 start_time = 0
 gameover = 0
 win = 0
 onbutton = False
+cek_background = 0
 
 
 pygame.init()
@@ -36,34 +38,6 @@ def init():
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     load_texture()
 
-def background(left, bottom, right, top, image):
-        glBindTexture(GL_TEXTURE_2D, image)
-        glBegin(GL_POLYGON)
-        glTexCoord2f(0, 0)
-        glVertex2f(left, bottom)
-        glTexCoord2f(1, 0)
-        glVertex2f(right, bottom)
-        glTexCoord2f(1, 1)
-        glVertex2f(right, top)
-        glTexCoord2f(0, 1)
-        glVertex2f(left, top)
-        glEnd()
-        glBindTexture(GL_TEXTURE_2D, -1)
-
-def background_kotak(left, bottom, right, top, color):
-    glBegin(GL_POLYGON)
-    glColor4f(*color)
-    glTexCoord(0, 0)
-    glVertex(left, bottom, 0)
-    glTexCoord(1, 0)
-    glVertex(right, bottom, 0)
-    glTexCoord(1, 1)
-    glVertex(right, top, 0)
-    glTexCoord(0, 1)
-    glVertex(left, top, 0)
-    glEnd()
-
-
 def display():
     global menu, gameover, win , onbutton
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -75,7 +49,7 @@ def display():
         glMatrixMode(GL_MODELVIEW)
 
         # CHANGE COLOR BACKGROUND WHEN MOUSE IN AREA BUTTON
-        background(0, 0, 1200, 700, BG1)
+        background(0, 0, 1200, 700, BG1 if cek_background == 0 else BGSUNSET if cek_background == 1 else BGUMI if cek_background == 2 else None)
         background(200, 500, 1000, 650, GAMENAME)
         background(480, 320, 720, 420, PLAYCLICK if pos_x >= 480 and pos_x <= 720 and pos_y >= 320 and pos_y <= 420 else PLAY)
         background(480, 200, 720, 300, OPTIONCLICK if pos_x >= 480 and pos_x <= 720 and pos_y >= 200 and pos_y <= 300 else OPTION)
@@ -91,7 +65,7 @@ def display():
         glMatrixMode(GL_MODELVIEW)
 
         # Rendering code with y-coordinates adjusted for the bottom-left origin
-        background(0, 0, 1200, 700, BG1)
+        background(0, 0, 1200, 700, BG1 if cek_background == 0 else BGSUNSET if cek_background == 1 else BGUMI if cek_background == 2 else None)
         background(50, -50 , 550 , 650 , INTROGIRL)
         background(800, 450, 1100, 550, EASYCLICK if pos_y >= 450 and pos_y <= 550 and pos_x >= 800 and pos_x <= 1100 else EASY)
         background(800, 300, 1100, 400, MEDIUMCLICK if pos_y >= 300 and pos_y <= 400 and pos_x >= 800 and pos_x <= 1100 else MEDIUM)
@@ -99,6 +73,7 @@ def display():
 
         glFlush()
         glutSwapBuffers()
+
     elif menu == 2:
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
@@ -115,13 +90,12 @@ def display():
         background(-1000,-675,2350,1375 , BGOUT)
         background(0,0,1200,700, BG2)
         draw_map()  # Gambar labirin
-        draw_crustle()  # Gambar koin
-        draw_pidgeot()  # Gambar kit kesehatan
-        draw_pikachu()  # Gambar bom
+        draw_crustle()  # Gambar Pokeon crustle
+        draw_pidgeot()  # Gambar Pokemon Pidgeot
+        draw_pikachu()  # Gambar Pokemon Pikachu
         draw_finish()  # Gambar finish line
         background_kotak(cen[0]-290, cen[1] + 110, cen[0] - 85, cen[1] + 160, (0,0,0,0.5))
         charModel.draw()
-        # glutSwapBuffers()  # Tukar buffer untuk menampilkan gambar
 
 
         glPushMatrix()
@@ -154,6 +128,7 @@ def display():
         glPopMatrix()
 
         glFlush()
+
     elif menu == 3:
         glClearColor(0.2, 0.2, 0.2, 0)
         glMatrixMode(GL_PROJECTION)
@@ -162,11 +137,32 @@ def display():
         glMatrixMode(GL_MODELVIEW)
 
         # Rendering code with y-coordinates adjusted for the bottom-left origin
-        background(0, 0, 1200, 700, BG1)
+        background(0, 0, 1200, 700, BG1 if cek_background == 0 else BGSUNSET if cek_background == 1 else BGUMI if cek_background == 2 else None)
         background(100, 350, 700, 550, FINISH if win == 1 else GAMEOVER)
         background(100, 200, 350, 300, PLAYCLICK if pos_y >= 200 and pos_y <= 300 and pos_x >= 100 and pos_x <= 350 else PLAY)
         background(450, 200, 700, 300, QUITCLICK if pos_y >= 200 and pos_y <= 300 and pos_x >= 450 and pos_x <= 700 else QUIT)
         background(800, -50 , 1200, 650, INTROBOY)
+
+        print("Posisi X: ", pos_x)
+        print("Posisi Y: ", pos_y)
+
+        glFlush()
+        glutSwapBuffers()
+    
+    elif menu == 4:
+        glClearColor(0.2, 0.2, 0.2, 0)
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        glOrtho(0, 1200, 0, 700, -1, 1)  # Adjusted for bottom-left origin
+        glMatrixMode(GL_MODELVIEW)
+
+        # Rendering code with y-coordinates adjusted for the bottom-left origin
+        background(0, 0, 1200, 700, BG1 if cek_background == 0 else BGSUNSET if cek_background == 1 else BGUMI if cek_background == 2 else None)
+        background(100, 50, 1100, 650, BOXBACKGROUND)
+        background(150, 500, 650, 550, BACKGROUNDTITLE)
+        background(150, 100, 430, 350, FARMERBUTTON)
+        background(450, 100, 760, 350, SUNSETBUTTON)
+        background(780, 100, 1050, 350, UMIBUTTON)
 
         print("Posisi X: ", pos_x)
         print("Posisi Y: ", pos_y)
@@ -276,12 +272,12 @@ def trackingMouse(x, y):
            
 
 def mouse(state,key, x , y):
-    global menu, gameover, win, start_time
+    global menu, gameover, win, start_time, cek_background
 
     if y >= 320 and y <= 420 and x >= 480 and x <= 720 and key == GLUT_LEFT_BUTTON and menu == 0:
         menu = 1
     elif pos_y >= 200 and pos_y <= 300 and pos_x >= 480 and pos_x <= 720 and key == GLUT_LEFT_BUTTON and menu == 0:
-        print("BELUM ADA OPTION hehe")
+        menu = 4
     elif pos_y >= 80 and pos_y <= 180 and pos_x >= 480 and pos_x <= 720 and key == GLUT_LEFT_BUTTON and menu == 0:
         os._exit(0)
     elif pos_y >= 450 and pos_y <= 550 and pos_x >= 800 and pos_x <= 1100 and key == GLUT_LEFT_BUTTON and menu == 1:
@@ -300,8 +296,14 @@ def mouse(state,key, x , y):
         reset_maze()
         charModel.reset_position()
         menu = 1
-    elif pos_y >= 200 and pos_y <= 300 and pos_x >= 450 and pos_x <= 700 and menu == 3 and key == GLUT_LEFT_BUTTON and menu == 3:
+    elif pos_y >= 200 and pos_y <= 300 and pos_x >= 450 and pos_x <= 700 and key == GLUT_LEFT_BUTTON and menu == 3:
         os._exit(0)
+    elif pos_x >= 150 and pos_x <= 430 and pos_y >= 100 and pos_y <= 350 and key == GLUT_LEFT_BUTTON and menu == 4:
+        menu = 0
+    elif pos_x >= 450 and pos_x <= 760 and pos_y >= 100 and pos_y <= 350 and key == GLUT_LEFT_BUTTON and menu == 4:
+        cek_background = 1
+    elif pos_x >= 780 and pos_x <= 1050 and pos_y >= 100 and pos_y <= 350 and key == GLUT_LEFT_BUTTON and menu == 4:
+        cek_background = 2
 
 
 def main():
