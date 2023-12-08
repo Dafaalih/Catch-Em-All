@@ -160,9 +160,10 @@ def display():
         background(0, 0, 1200, 700, BG1 if cek_background == 0 else BGSUNSET if cek_background == 1 else BGUMI if cek_background == 2 else None)
         background(100, 50, 1100, 650, BOXBACKGROUND)
         background(150, 500, 650, 550, BACKGROUNDTITLE)
-        background(150, 100, 430, 350, FARMERBUTTON)
-        background(450, 100, 760, 350, SUNSETBUTTON)
-        background(780, 100, 1050, 350, UMIBUTTON)
+        background(150, 230, 430, 450, FARMERBUTTON)
+        background(450, 230, 760, 450, SUNSETBUTTON)
+        background(780, 230, 1050, 450, UMIBUTTON)
+        background(780, 100, 1050, 200, BACKBUTTONCLICK if pos_y >= 100 and pos_y <= 200 and pos_x >= 700 and pos_x <= 1050 else BACKBUTTON)
 
         print("Posisi X: ", pos_x)
         print("Posisi Y: ", pos_y)
@@ -267,6 +268,10 @@ def trackingMouse(x, y):
         if onbutton == False:
             sounds[1].play(0)
             onbutton = True
+    elif pos_y >= 100 and pos_y <= 200 and pos_x >= 700 and pos_x <= 1050 and menu == 4:
+        if onbutton == False:
+            sounds[1].play(0)
+            onbutton = True
     else :
         onbutton = False
            
@@ -298,12 +303,15 @@ def mouse(state,key, x , y):
         menu = 1
     elif pos_y >= 200 and pos_y <= 300 and pos_x >= 450 and pos_x <= 700 and key == GLUT_LEFT_BUTTON and menu == 3:
         os._exit(0)
-    elif pos_x >= 150 and pos_x <= 430 and pos_y >= 100 and pos_y <= 350 and key == GLUT_LEFT_BUTTON and menu == 4:
-        menu = 0
-    elif pos_x >= 450 and pos_x <= 760 and pos_y >= 100 and pos_y <= 350 and key == GLUT_LEFT_BUTTON and menu == 4:
+    elif pos_x >= 150 and pos_x <= 430 and pos_y >= 230 and pos_y <= 450 and key == GLUT_LEFT_BUTTON and menu == 4:
+        cek_background = 0
+    elif pos_x >= 450 and pos_x <= 760 and pos_y >= 230 and pos_y <= 450 and key == GLUT_LEFT_BUTTON and menu == 4:
         cek_background = 1
-    elif pos_x >= 780 and pos_x <= 1050 and pos_y >= 100 and pos_y <= 350 and key == GLUT_LEFT_BUTTON and menu == 4:
+    elif pos_x >= 780 and pos_x <= 1050 and pos_y >= 230 and pos_y <= 450 and key == GLUT_LEFT_BUTTON and menu == 4:
         cek_background = 2
+    elif pos_y >= 100 and pos_y <= 200 and pos_x >= 700 and pos_x <= 1050 and key == GLUT_LEFT_BUTTON and menu == 4:
+        menu = 0
+
 
 
 def main():
